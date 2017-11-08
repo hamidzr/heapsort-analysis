@@ -16,6 +16,34 @@ public class Heap{
         Arrays.fill(heap, -1);
     }
 
+    public Heap(int[] seed, int n) {
+        this.n = n;
+        this.heap = new int[seed.length];
+        Arrays.fill(heap, -1);
+        for (int i = 0; i < seed.length; i++) {
+            try {
+                insert(seed[i]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int extractRoot() {
+        int rootValue = heap[0];
+        swap(heap, 0, heapSize -1 );
+        heapSize--;
+        heapifyDown(0);
+        return rootValue;
+    }
+
+    // swaps elements in an array
+    private void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[j] = arr[i];
+        arr[j] = tmp;
+    }
+
     public boolean isEmpty( ) {
         return heapSize == 0;
     }
