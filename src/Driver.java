@@ -5,6 +5,9 @@ public class Driver {
     public static void main(String[] args) {
         int[] testArray = new int[] {5,2,3,4,-4};
         Sorter heapSort = new HeapSort();
+
+        Heap binaryHeap = new Heap(testArray, 2);
         heapSort.time(testArray);
+
     }
 }
