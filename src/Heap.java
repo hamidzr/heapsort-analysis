@@ -10,7 +10,7 @@ public class Heap{
      * @param n {int} number of children
      */
     // TODO use an arralist to have dynamic capacity
-    public void Heap(int capacity, int n) {
+    public Heap(int capacity, int n) {
         this.n = n;
         this.heap = new int[capacity];
         Arrays.fill(heap, -1);
