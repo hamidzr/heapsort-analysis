@@ -5,26 +5,34 @@ public class Heap{
     private int n = 2; // n-ary
     private int heapSize = 0;
     private int[] heap;
+    // TODO make it a maxHeap
 
     /*
      * @param n {int} number of children
      */
     // TODO use an arralist to have dynamic capacity
-    public Heap(int capacity, int n) {
-        this.n = n;
-        this.heap = new int[capacity];
+    public Heap(int capacity, int numChildren) {
+        n = numChildren;
+        heap = new int[capacity];
         Arrays.fill(heap, -1);
     }
 
-    public Heap(int[] seed, int n) {
-        this.n = n;
-        this.heap = new int[seed.length];
-        Arrays.fill(heap, -1);
-        for (int i = 0; i < seed.length; i++) {
-            try {
-                insert(seed[i]);
-            } catch (Exception e) {
-                e.printStackTrace();
+    public Heap(int[] seed, int numChildren, boolean inPlace) {
+        n = numChildren;
+        if (inPlace) {
+            heap = seed;
+            heapSize = seed.length;
+            for (int i = heapSize / 2 - 1; i >= 0; i--)
+                bubbleDown(i);
+        } else {
+            this.heap = new int[seed.length];
+            Arrays.fill(heap, -1);
+            for (int i = 0; i < seed.length; i++) {
+                try {
+                    insert(seed[i]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -33,7 +41,7 @@ public class Heap{
         int rootValue = heap[0];
         swap(heap, 0, heapSize -1 );
         heapSize--;
-        heapifyDown(0);
+        bubbleDown(0);
         return rootValue;
     }
 
@@ -73,10 +81,10 @@ public class Heap{
         // put the item at the end of the heap
         heap[heapSize++] = x;
         // bubbleUp
-        heapifyUp(heapSize - 1);
+        bubbleUp(heapSize - 1);
     }
  
-    public int findMin( ) throws Exception {
+    public int getRoot() throws Exception {
         if (isEmpty())
             throw new Exception("Underflow Exception");           
         return heap[0];
@@ -88,11 +96,11 @@ public class Heap{
         int keyItem = heap[idx];
         heap[idx] = heap[heapSize - 1];
         heapSize--;
-        heapifyDown(idx);        
+        bubbleDown(idx);        
         return keyItem;
     }
  
-    private void heapifyUp(int childInd) {
+    private void bubbleUp(int childInd) {
         int tmp = heap[childInd];    
         while (childInd > 0 && tmp < heap[parent(childInd)])
         {
@@ -102,7 +110,7 @@ public class Heap{
         heap[childInd] = tmp;
     }
  
-    private void heapifyDown(int idx) {
+    private void bubbleDown(int idx) {
         int child;
         int tmp = heap[ idx ];
         while (kthChild(idx, 1) < heapSize)
