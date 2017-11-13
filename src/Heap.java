@@ -4,20 +4,22 @@ import java.util.Arrays;
 public class Heap{
     private int n = 2; // n-ary
     private int heapSize = 0;
+    private boolean maxHeap = true;
     private int[] heap;
-    // TODO make it a maxHeap
 
     /*
      * @param n {int} number of children
      */
     // TODO use an arralist to have dynamic capacity
-    public Heap(int capacity, int numChildren) {
+    public Heap(int capacity, int numChildren, boolean isMaxHeap) {
+        maxHeap = isMaxHeap;
         n = numChildren;
         heap = new int[capacity];
         Arrays.fill(heap, -1);
     }
 
-    public Heap(int[] seed, int numChildren, boolean inPlace) {
+    public Heap(int[] seed, int numChildren, boolean inPlace, boolean isMaxHeap) {
+        maxHeap = isMaxHeap;
         n = numChildren;
         if (inPlace) {
             heap = seed;
@@ -99,10 +101,18 @@ public class Heap{
         bubbleDown(idx);        
         return keyItem;
     }
+
+    // checks if two item are out of order considering if it's a max or min heap
+    private boolean isMisplaced(int a, int b) {
+        if (maxHeap) {
+            return a > b;
+        }
+        return a < b;
+    }
  
     private void bubbleUp(int childInd) {
         int tmp = heap[childInd];    
-        while (childInd > 0 && tmp < heap[parent(childInd)])
+        while (childInd > 0 && isMisplaced(tmp, heap[parent(childInd)]))
         {
             heap[childInd] = heap[ parent(childInd) ];
             childInd = parent(childInd);
@@ -113,10 +123,10 @@ public class Heap{
     private void bubbleDown(int idx) {
         int child;
         int tmp = heap[ idx ];
-        while (kthChild(idx, 1) < heapSize)
+        while (isMisplaced(kthChild(idx, 1), heapSize))
         {
-            child = minChild(idx);
-            if (heap[child] < tmp)
+            child = bestChild(idx);
+            if (isMisplaced(heap[child], tmp))
                 heap[idx] = heap[child];
             else
                 break;
@@ -125,14 +135,14 @@ public class Heap{
         heap[idx] = tmp;
     }
  
-    // finds the minimum child
-    private int minChild(int idx) {
+    // finds the "best child" min if minHeap, max if maxHeap. root candidate
+    private int bestChild(int idx) {
         int bestChild = kthChild(idx, 1);
         int k = 2;
         int pos = kthChild(idx, k);
         while ((k <= n) && (pos < heapSize))
         {
-            if (heap[pos] < heap[bestChild]) 
+            if (isMisplaced(heap[pos], heap[bestChild]))
                 bestChild = pos;
             pos = kthChild(idx, k++);
         }    
