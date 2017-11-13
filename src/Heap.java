@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.Arrays;
 
 public class Heap{
@@ -47,10 +46,21 @@ public class Heap{
         return rootValue;
     }
 
+    private void bubbleDown(int rootIndex) {
+        int best = rootIndex;
+
+        int bestChildIdx = bestChild(rootIndex);
+        if (bestChildIdx < heapSize && isMisplaced(heap[bestChildIdx], heap[best])) {
+            best = bestChildIdx;
+            swap(heap, rootIndex, best);
+            bubbleDown(best);
+        }
+    }
+
     // swaps elements in an array
     private void swap(int[] arr, int i, int j) {
         int tmp = arr[i];
-        arr[j] = arr[i];
+        arr[i] = arr[j];
         arr[j] = tmp;
     }
 
@@ -70,6 +80,10 @@ public class Heap{
     // returns parent index of input
     private int parent(int i) {
         return (i - 1)/n;
+    }
+
+    public int size() {
+        return heapSize;
     }
  
     // get kth child, it's equal to left and right if this is a binary heap
@@ -120,21 +134,6 @@ public class Heap{
         heap[childInd] = tmp;
     }
  
-    private void bubbleDown(int idx) {
-        int child;
-        int tmp = heap[ idx ];
-        while (isMisplaced(kthChild(idx, 1), heapSize))
-        {
-            child = bestChild(idx);
-            if (isMisplaced(heap[child], tmp))
-                heap[idx] = heap[child];
-            else
-                break;
-            idx = child;
-        }
-        heap[idx] = tmp;
-    }
- 
     // finds the "best child" min if minHeap, max if maxHeap. root candidate
     private int bestChild(int idx) {
         int bestChild = kthChild(idx, 1);
@@ -145,10 +144,10 @@ public class Heap{
             if (isMisplaced(heap[pos], heap[bestChild]))
                 bestChild = pos;
             pos = kthChild(idx, k++);
-        }    
+        }
         return bestChild;
     }
- 
+
     public void printHeap() {
         System.out.print("\nHeap = ");
         for (int i = 0; i < heapSize; i++)
