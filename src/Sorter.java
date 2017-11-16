@@ -13,6 +13,6 @@ public abstract class Sorter {
         sort();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-        System.out.println(this.getClass().getSimpleName() + " took " + duration + " nanoseconds.");
+        System.out.println(this.getClass().getSimpleName() + " took " + duration + " nanoseconds. (" + duration / Math.pow(10,6) + " miliseconds)");
     }
 }
