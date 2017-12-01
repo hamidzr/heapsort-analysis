@@ -26,8 +26,39 @@ public class Driver {
 
 
         // test different algorithms / implementations
-        Sorter heapSort = new HeapSort(testArray, 2);
-        heapSort.time();
+
+        // input statistics
+        System.out.println("input array -> size: " + (double)testArray.length / 1000000
+                + "m, range: " + (double)maxNumber/1000000 + "m");
+        System.out.println("input memory requirements: " + 4*testArray.length + " bytes or " + (double) 4*testArray.length /1048576 + " megabytes");
+
+        System.out.println("====================== tests ===================");
+        // 2-ary HeapSort
+        int[] copy1a = copyArray(testArray);
+        Sorter heapSort2 = new HeapSort(copy1a, 2);
+        heapSort2.time();
+
+        // 3-ary HeapSort
+        int[] copy1b = copyArray(testArray);
+        Sorter heapSort3 = new HeapSort(copy1b, 3);
+        heapSort3.time();
+
+        // 4-ary HeapSort
+        int[] copy1c = copyArray(testArray);
+        Sorter heapSort4 = new HeapSort(copy1c, 4);
+        heapSort4.time();
+
+        // QuickSort
+        int[] copy2 = copyArray(testArray);
+        Sorter quickSort = new QuickSort(copy2);
+        quickSort.time();
+
+        // MergeSort
+        int[] copy3 = copyArray(testArray);
+        Sorter mergeSort = new MergeSort(copy3);
+        mergeSort.time();
+
+        // TODO do I need to manually clear memory?
 
     }
 
