@@ -1,4 +1,5 @@
 package src;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MaxHeap{
@@ -9,31 +10,12 @@ public class MaxHeap{
     /*
      * @param n {int} number of children
      */
-    // TODO use an arralist to have dynamic capacity
-    public MaxHeap(int capacity, int numChildren) {
+    public MaxHeap(int[] seed, int numChildren) {
         n = numChildren;
-        heap = new int[capacity];
-        Arrays.fill(heap, -1);
-    }
-
-    public MaxHeap(int[] seed, int numChildren, boolean inPlace) {
-        n = numChildren;
-        if (inPlace) {
-            heap = seed;
-            heapSize = seed.length;
-            for (int i = heapSize / 2 - 1; i >= 0; i--)
-                bubbleDown(i);
-        } else {
-            this.heap = new int[seed.length];
-            Arrays.fill(heap, -1);
-            for (int i = 0; i < seed.length; i++) {
-                try {
-                    insert(seed[i]);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        heap = seed;
+        heapSize = seed.length;
+        for (int i = heapSize / 2 - 1; i >= 0; i--)
+            bubbleDown(i);
     }
 
     public int extractRoot() {
@@ -77,7 +59,7 @@ public class MaxHeap{
 
     // returns parent index of input
     private int parent(int i) {
-        return (i - 1)/n;
+        return (i - 1)/n; // floor
     }
 
     public int size() {
@@ -87,6 +69,16 @@ public class MaxHeap{
     // get kth child, it's equal to left and right if this is a binary heap
     private int kthChild(int i, int k) {
         return n * i + k;
+    }
+
+    private int[] childrenRange(int root) throws Exception{
+        // n*root + 1 to n*root + n
+        int start = n*root +1;
+        int end = n*root +n;
+        if (start > heapSize-1) throw new Exception("children out of range");
+        if (end > heapSize-1) end = heapSize -1;
+        int[] range = {start, end};
+        return range;
     }
 
     public void insert(int x) throws Exception {
@@ -104,16 +96,6 @@ public class MaxHeap{
         return heap[0];
     }
 
-    public int delete(int idx) throws Exception {
-        if (isEmpty() || heapSize <= idx)
-            throw new Exception("Underflow Exception");
-        int keyItem = heap[idx];
-        heap[idx] = heap[heapSize - 1];
-        heapSize--;
-        bubbleDown(idx);
-        return keyItem;
-    }
-
     // checks if two item are out of order considering if it's a max or min heap
     private boolean isMisplaced(int a, int b) {
         return a > b;
@@ -129,18 +111,25 @@ public class MaxHeap{
         heap[childInd] = tmp;
     }
 
-    // finds the "best child" min if minHeap, max if maxHeap. root candidate
-    private int bestChild(int idx) {
-        int bestChild = kthChild(idx, 1);
-        int k = 2;
-        int pos = kthChild(idx, k);
-        while ((k <= n) && (pos < heapSize))
-        {
-            if (heap[pos] > heap[bestChild])
-                bestChild = pos;
-            pos = kthChild(idx, k++);
+    // largest child index
+    private int bestChild(int root) {
+        int maxChildVal = -1;
+        int maxChildIdx = 0; // init to make the compiler happy
+        int[] range;
+        try {
+            range = childrenRange(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return root;
         }
-        return bestChild;
+        for (int i = range[0]; i <= range[1]; i++) {
+            if (heap[i] > maxChildVal) {
+                // this is the largest child so far
+                maxChildIdx = i;
+                maxChildVal = heap[i];
+            }
+        }
+        return maxChildIdx;
     }
 
     public void printHeap() {
