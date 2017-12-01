@@ -4,21 +4,21 @@ public class HeapTest {
         int[] testArray = {-10,5, -4, 17, 8, 1,2,3,4};
 
         int[] copy1a = Driver.copyArray(testArray);
-        Heap maxHeap = new Heap(copy1a,2,true, true);
+        MaxHeap maxHeap = new MaxHeap(copy1a,2);
         testHeap(maxHeap, 17, 8);
 
         int[] copy1b = Driver.copyArray(testArray);
-        Heap minHeap = new Heap(copy1b,2,true, false);
+        MaxHeap minHeap = new MaxHeap(copy1b,2);
         testHeap(minHeap, -10, -4);
 
         int[] copy2 = Driver.copyArray(testArray);
-        Heap heap2 = new Heap(copy2,3,true, true);
+        MaxHeap heap2 = new MaxHeap(copy2,3);
         testHeap(heap2, 17, 8);
 
 
     }
 
-    private static void testHeap(Heap heap, int first, int second) {
+    private static void testHeap(MaxHeap heap, int first, int second) {
         try {
             if (heap.getRoot() !=first)
                 throw new Exception("bad getRoot");

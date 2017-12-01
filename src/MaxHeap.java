@@ -51,6 +51,7 @@ public class MaxHeap{
     // clear the heap
     public void clear( ) {
         heapSize = 0;
+        heap = null;
     }
 
     // returns parent index of input
@@ -109,7 +110,7 @@ public class MaxHeap{
 
     // largest child index
     private int bestChild(int root) {
-        int maxChildVal = -1;
+        int maxChildVal = -1 * Integer.MAX_VALUE;
         int maxChildIdx = 0; // init to make the compiler happy
         int[] range;
         try {
