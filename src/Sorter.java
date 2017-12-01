@@ -5,14 +5,18 @@ public abstract class Sorter {
 
     public abstract void sort();
 
+    public abstract String describe();
+
     // sorts and times sorting
-    public void time() {
+    public double time() {
         // System.out.println("sorting an array of size " + input.length);
-        System.out.println("sorting..");
+        System.out.println("sorting with " + describe() + "..");
         long startTime = System.nanoTime();
         sort();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-        System.out.println(this.getClass().getSimpleName() + " took " + duration + " nanoseconds. (" + duration / Math.pow(10,6) + " miliseconds)");
+        System.out.println(describe() + " took " + duration + " nanoseconds." +
+                "(" + (int) (duration / Math.pow(10,6)) + " ms, " + (int) (duration / Math.pow(10,9)) + " seconds)");
+        return duration;
     }
 }

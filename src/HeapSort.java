@@ -23,4 +23,9 @@ public class HeapSort extends Sorter {
         }
 
     }
+
+    @Override
+    public String describe() {
+        return numChildren + "-ary " + getClass().getSimpleName();
+    }
 }
