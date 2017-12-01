@@ -1,7 +1,3 @@
-package src;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class MaxHeap{
     private int n = 2; // n-ary
     private int heapSize = 0;

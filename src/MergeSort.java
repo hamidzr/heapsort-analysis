@@ -1,6 +1,3 @@
-package src;
-
-
 // space: O(n)
 public class MergeSort extends Sorter {
 
