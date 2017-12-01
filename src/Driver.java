@@ -12,7 +12,7 @@ public class Driver {
     public static void main(String[] args) {
         // TODO remove tests for production
         // run some tests
-        heapTest();
+        HeapTest.run();
 
 		// setup commandline arguments
 		String[] mandatory_args = {"array_size", "max_number"};
@@ -56,18 +56,10 @@ public class Driver {
         return numbers;
     }
 
-    private static void heapTest() {
-        int[] testArray = {-10,5, -4, 17, 8, 1,2,3,4};
-        Heap testHeap = new Heap(testArray,2,true, true);
-        try {
-            if (testHeap.getRoot() != 17)
-                throw new Exception("bad getRoot");
-            if (testHeap.extractRoot() != 17)
-                throw new Exception("bad extract");
-            if (testHeap.extractRoot() != 8)
-                throw new Exception("didn't bubble down properly");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    protected static int[] copyArray(int[] src) {
+        int[] copy = new int[src.length];
+        System.arraycopy(src, 0, copy, 0, src.length);
+        return copy;
     }
+
 }

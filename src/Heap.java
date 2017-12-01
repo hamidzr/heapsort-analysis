@@ -149,11 +149,13 @@ public class Heap{
     }
 
     public void printHeap() {
-        System.out.print("\nHeap = ");
-        for (int i = 0; i < heapSize; i++)
-            System.out.print(heap[i] +" ");
-        System.out.println();
-    }     
+        for (int i = 0; i < heapSize; i++) {
+            for(int j=0;j<Math.pow(n,i)&&j+Math.pow(n,i)<heapSize;j++){
+                System.out.print(heap[j+(int)Math.pow(n,i)-1]+" ");
+            }
+            System.out.println();
+        }
+    }
 
     public String toString() {
         String msg = "";
