@@ -1,5 +1,3 @@
-package src;
-
 // repeated elements ..
 public class QuickSort extends Sorter {
     private int[] input;
