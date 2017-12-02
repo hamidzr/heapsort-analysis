@@ -14,7 +14,8 @@ public class HeapSort extends Sorter {
     @Override
     public void sort() {
         // create the heap
-        Heap mHeap = new Heap(input, numChildren, true, true);
+        // Heap mHeap = new Heap(input, numChildren, true, true);
+        MaxHeap mHeap = new MaxHeap(input, numChildren); // use the second implementation
 
         // sort
         int size = mHeap.size();

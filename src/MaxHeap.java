@@ -1,3 +1,4 @@
+// a slightly different implementation of n-ary Heap which just supports a MaxHeap to allow for a simpler, more readable code
 public class MaxHeap{
     private int n = 2; // n-ary
     private int heapSize = 0;
@@ -110,6 +111,7 @@ public class MaxHeap{
 
     // largest child index
     private int bestChild(int root) {
+        if (n*root +1 > heapSize -1) return root;
         int maxChildVal = -1 * Integer.MAX_VALUE;
         int maxChildIdx = 0; // init to make the compiler happy
         int[] range;
