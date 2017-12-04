@@ -11,7 +11,7 @@ public class MaxHeap{
         n = numChildren;
         heap = seed;
         heapSize = seed.length;
-        for (int i = heapSize / 2 - 1; i >= 0; i--)
+        for (int i = heapSize / n - 1; i >= 0; i--)
             bubbleDown(i);
     }
 
