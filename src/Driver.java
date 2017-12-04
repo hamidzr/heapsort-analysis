@@ -48,6 +48,11 @@ public class Driver {
         Sorter heapSort4 = new HeapSort(copy1c, 4);
         heapSort4.time();
 
+        // 5-ary HeapSort
+        int[] copy1d = copyArray(testArray);
+        Sorter heapSort5 = new HeapSort(copy1d, 5);
+        heapSort5.time();
+
         // QuickSort
         int[] copy2 = copyArray(testArray);
         Sorter quickSort = new QuickSort(copy2);

@@ -12,6 +12,9 @@ public class HeapTest {
         testHeap(heap2, 17, 8);
 
 
+        int[] copy3 = Driver.copyArray(testArray);
+        MaxHeap heap3 = new MaxHeap(copy3,4);
+        testHeap(heap3, 17, 8);
     }
 
     private static void testHeap(MaxHeap heap, int first, int second) {
