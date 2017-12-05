@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.apache.commons.cli.Option;
@@ -63,7 +62,7 @@ public class Driver {
         Sorter mergeSort = new MergeSort(copy3);
         mergeSort.time();
 
-        // TODO do I need to manually clear memory?
+        // do I need to manually clear memory to have consistent garbage collection?
 
     }
 

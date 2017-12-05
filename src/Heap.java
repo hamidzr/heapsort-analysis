@@ -17,6 +17,7 @@ public class Heap{
         Arrays.fill(heap, -1);
     }
 
+    // inplace implementation
     public Heap(int[] seed, int numChildren, boolean inPlace, boolean isMaxHeap) {
         maxHeap = isMaxHeap;
         n = numChildren;

@@ -25,9 +25,7 @@ public class HeapTest {
                 throw new Exception("bad extract");
             if (heap.extractRoot() !=second)
                 throw new Exception("didn't bubble down properly");
-            // System.out.println("passed");
         } catch (Exception e) {
-            // System.out.println(e.getMessage());
             heap.printHeap();
             e.printStackTrace();
         }
