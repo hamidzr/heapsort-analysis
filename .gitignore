@@ -31,7 +31,6 @@ hs_err_pid*
 *.out
 *.synctex.gz
 
-.env
 *.model
 *.predictions
 .DS_Store
