@@ -6,17 +6,17 @@ import org.apache.commons.cli.OptionBuilder;
 
 
 public class Driver {
-	static public LinkedList<Option> options = new LinkedList<Option>();
+    static public LinkedList<Option> options = new LinkedList<Option>();
 
     public static void main(String[] args) {
         // TODO remove tests for production
         // run some tests
         HeapTest.run();
 
-		// setup commandline arguments
-		String[] mandatory_args = {"array_size", "max_number"};
-		createCommandLineOptions();
-		CommandLineUtilities.initCommandLineParameters(args, options, mandatory_args);
+        // setup commandline arguments
+        String[] mandatory_args = {"array_size", "max_number"};
+        createCommandLineOptions();
+        CommandLineUtilities.initCommandLineParameters(args, options, mandatory_args);
         int arraySize = Integer.parseInt(CommandLineUtilities.getOptionValue("array_size"));
         int maxNumber = Integer.parseInt(CommandLineUtilities.getOptionValue("max_number"));
 
@@ -36,48 +36,66 @@ public class Driver {
         int[] copy1a = copyArray(testArray);
         Sorter heapSort2 = new HeapSort(copy1a, 2);
         heapSort2.time();
+        System.gc();
 
         // 3-ary HeapSort
         int[] copy1b = copyArray(testArray);
         Sorter heapSort3 = new HeapSort(copy1b, 3);
         heapSort3.time();
+        System.gc();
 
         // 4-ary HeapSort
         int[] copy1c = copyArray(testArray);
         Sorter heapSort4 = new HeapSort(copy1c, 4);
         heapSort4.time();
+        System.gc();
 
         // 5-ary HeapSort
         int[] copy1d = copyArray(testArray);
         Sorter heapSort5 = new HeapSort(copy1d, 5);
         heapSort5.time();
+        System.gc();
+
+        // -ary HeapSort
+        int[] copy1e = copyArray(testArray);
+        Sorter heapSort6 = new HeapSort(copy1e, 20);
+        heapSort6.time();
+        System.gc();
+
+        // -ary HeapSort
+        int[] copy1f = copyArray(testArray);
+        Sorter heapSort7 = new HeapSort(copy1f, 50);
+        heapSort7.time();
+        System.gc();
 
         // QuickSort
         int[] copy2 = copyArray(testArray);
         Sorter quickSort = new QuickSort(copy2);
         quickSort.time();
+        System.gc();
 
         // MergeSort
         int[] copy3 = copyArray(testArray);
         Sorter mergeSort = new MergeSort(copy3);
         mergeSort.time();
+        System.gc();
 
         // do I need to manually clear memory to have consistent garbage collection?
 
     }
 
-	private static void registerOption(String option_name, String arg_name, boolean has_arg, String description) {
-		OptionBuilder.withArgName(arg_name);
-		OptionBuilder.hasArg(has_arg);
-		OptionBuilder.withDescription(description);
-		Option option = OptionBuilder.create(option_name);
-		options.add(option);
-	}
+    private static void registerOption(String option_name, String arg_name, boolean has_arg, String description) {
+        OptionBuilder.withArgName(arg_name);
+        OptionBuilder.hasArg(has_arg);
+        OptionBuilder.withDescription(description);
+        Option option = OptionBuilder.create(option_name);
+        options.add(option);
+    }
 
-	private static void createCommandLineOptions() {
-		registerOption("array_size", "int", true, "test array size");
-		registerOption("max_number", "int", true, "max array range starting from 0");
-	}
+    private static void createCommandLineOptions() {
+        registerOption("array_size", "int", true, "test array size");
+        registerOption("max_number", "int", true, "max array range starting from 0");
+    }
 
     private static int[] generateArray(int size, int maxNumber) {
         int[] numbers = new int[size];
