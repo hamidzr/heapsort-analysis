@@ -10,7 +10,8 @@ from tqdm import tqdm
 
 JAVA = '/usr/bin/java'
 JVM_INIT_MEMORY = '500m'
-JVM_MAX_MEMORY = '1000m'
+JVM_MAX_MEMORY = '4g'
+EAT_MEMORY = "a" * int(2 * math.pow(10,9))
 
 def testWith(size, maxNum):
     cmd = f'{JAVA} -Xms{JVM_INIT_MEMORY} -Xmx{JVM_MAX_MEMORY} Driver -array_size {size} -max_number {maxNum}'
@@ -51,7 +52,7 @@ def generateConfigs(numTests=30, startSize=1000, growthRate=1000):
 def analyze(configs):
     timesMatrix = np.empty((len(configs), len(sortNames)), dtype=int)
     for idx, [size, maxNum] in enumerate(configs):
-        print(f'[{idx}/{len(configs)}] testing with array of size {size}, and range {maxNum}')
+        print(f'[{idx+1}/{len(configs)}] testing with array of size {size}, and range {maxNum}')
         names, times = testWith(size, maxNum)
         timesMatrix[idx] = times
     return timesMatrix
@@ -91,4 +92,6 @@ def plot(configs, times, names, xAxis):
 sortNames = testWith(1,1)[0]
 configs = generateConfigs(startSize=20000000, growthRate=0, numTests=10)
 times = analyze(configs)
-plot(configs, times, sortNames, xAxis=None)
+plot(configs, times, sortNames, xAxis='size')
+
+EAT_MEMORY = EAT_MEMORY + 1 # keep the it in memory 
